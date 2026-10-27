@@ -79,6 +79,19 @@ void Ball::update(float dt)
         _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle()->getBounds().top - 2 * RADIUS);
     }
 
+
+    // collision with paddle 2
+    if (_sprite.getGlobalBounds().intersects(_gameManager->getPaddle2()->getBounds()))
+    {
+        _direction.y *= -1; // Bounce vertically
+
+        float paddlePositionProportion = (_sprite.getPosition().x - _gameManager->getPaddle2()->getBounds().left) / _gameManager->getPaddle2()->getBounds().width;
+        _direction.x = paddlePositionProportion * 2.0f - 1.0f;
+
+        // Adjust position to avoid getting stuck inside the paddle
+        _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle2()->getBounds().top - 2 * RADIUS);
+    }
+
     // collision with bricks
     int collisionResponse = _gameManager->getBrickManager()->checkCollision(_sprite, _direction);
     if (_isFireBall) return; // no collisisons when in fireBall mode.

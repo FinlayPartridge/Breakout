@@ -17,11 +17,12 @@ GameManager::GameManager(sf::RenderWindow* window)
 
 void GameManager::initialize()
 {
-    _paddle = new Paddle(_window);
+    _paddle = new Paddle(_window, sf::Color::Cyan);
+    _paddle2 = new Paddle(_window, sf::Color::Red);
     _brickManager = new BrickManager(_window, this);
     _messagingSystem = new MessagingSystem(_window);
     _ball = new Ball(_window, 400.0f, this); 
-    _powerupManager = new PowerupManager(_window, _paddle, _ball);
+    _powerupManager = new PowerupManager(_window, _paddle, _paddle2, _ball);
     _ui = new UI(_window, _lives, this);
 
     // Create bricks
@@ -81,6 +82,10 @@ void GameManager::update(float dt)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) _paddle->moveRight(dt);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) _paddle->moveLeft(dt);
 
+    // move paddle 2
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) _paddle2->moveRight(dt);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) _paddle2->moveLeft(dt);
+
     // update everything 
     _paddle->update(dt);
     _ball->update(dt);
@@ -98,6 +103,7 @@ void GameManager::loseLife()
 void GameManager::render()
 {
     _paddle->render();
+    _paddle2->render();
     _ball->render();
     _brickManager->render();
     _powerupManager->render();
@@ -113,5 +119,6 @@ void GameManager::levelComplete()
 sf::RenderWindow* GameManager::getWindow() const { return _window; }
 UI* GameManager::getUI() const { return _ui; }
 Paddle* GameManager::getPaddle() const { return _paddle; }
+Paddle* GameManager::getPaddle2() const { return _paddle2; }
 BrickManager* GameManager::getBrickManager() const { return _brickManager; }
 PowerupManager* GameManager::getPowerupManager() const { return _powerupManager; }
