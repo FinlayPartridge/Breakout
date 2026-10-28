@@ -97,8 +97,8 @@ void UI::render()
 	_window->draw(_powerupText);
 	_window->draw(_player1ScoreText);
 	_window->draw(_player2ScoreText);
-	for (sf::CircleShape life : _lives)
-	{
-		_window->draw(life);
-	}
+	//for (sf::CircleShape life : _lives)
+	//{
+	//	_window->draw(life);
+	//}
 }

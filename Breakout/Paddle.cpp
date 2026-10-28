@@ -33,6 +33,16 @@ void Paddle::moveRight(float dt)
     }
 }
 
+void Paddle::lowerPaddle()
+{
+	_sprite.setPosition(_sprite.getPosition().x, _window->getSize().y - 49.0f);
+}
+
+void Paddle::returnToNormalHeight()
+{
+    _sprite.setPosition(_sprite.getPosition().x, _window->getSize().y - 50.0f);
+}
+
 void Paddle::update(float dt)
 {
     if (_timeInNewSize > 0)

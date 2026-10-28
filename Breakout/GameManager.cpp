@@ -35,6 +35,18 @@ void GameManager::update(float dt)
     _ui->updatePowerupText(_powerupInEffect);
 	_ui->updateScoreText(_ball->getPaddle1Score(), _ball->getPaddle2Score());
     _powerupInEffect.second -= dt;
+
+    //Sets whoever is winning to have a disadvantage in a when on top of eachother
+    if (_ball->getPaddle1Score() > _ball->getPaddle2Score())
+    {
+        _paddle->lowerPaddle();
+		_paddle2->returnToNormalHeight();
+    }
+    if (_ball->getPaddle1Score() < _ball->getPaddle2Score())
+    {
+        _paddle->returnToNormalHeight();
+		_paddle2->lowerPaddle();
+    }
     
 
     if (_lives <= 0)
@@ -44,7 +56,19 @@ void GameManager::update(float dt)
     }
     if (_levelComplete)
     {
-        _masterText.setString("Level completed.");
+        if (_ball->getPaddle1Score() > _ball->getPaddle2Score())
+        {
+            _masterText.setString("Player 1 wins!");
+        }
+        if (_ball->getPaddle1Score() > _ball->getPaddle2Score())
+        {
+            _masterText.setString("Player 2 wins!");
+        }
+        if (_ball->getPaddle1Score() == _ball->getPaddle2Score())
+        {
+            _masterText.setString("Its a tie!");
+        }
+
         return;
     }
     // pause and pause handling
@@ -95,8 +119,8 @@ void GameManager::update(float dt)
 
 void GameManager::loseLife()
 {
-    _lives--;
-    _ui->lifeLost(_lives);
+    //_lives--;
+    //_ui->lifeLost(_lives);
 
     // TODO screen shake.
 }
