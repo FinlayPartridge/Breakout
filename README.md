@@ -35,13 +35,13 @@ _TO DO_
 
 Time spent: 4 hours
 
-+Local multiplayer
-+Score System
-+Cases for winning for each player and a tie
-+Made Ball change colour based on who last hit it
++Local multiplayer.
++Score System.
++Cases for winning for each player and a tie.
++Made Ball change colour based on who last hit it.
 
--Power ups from spawning
--Lives and losing state
+-Power ups from spawning.
+-Lives and losing state.
 
 ---
 
