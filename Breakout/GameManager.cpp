@@ -4,7 +4,7 @@
 #include <iostream>
 
 GameManager::GameManager(sf::RenderWindow* window)
-    : _window(window), _paddle(nullptr), _ball(nullptr), _brickManager(nullptr), _powerupManager(nullptr),
+    : _window(window), _paddle(nullptr), _paddle2(nullptr), _ball(nullptr), _brickManager(nullptr), _powerupManager(nullptr),
     _messagingSystem(nullptr), _ui(nullptr), _pause(false), _time(0.f), _lives(3), _pauseHold(0.f), _levelComplete(false),
     _powerupInEffect({ none,0.f }), _timeLastPowerupSpawned(0.f)
 {
@@ -33,6 +33,7 @@ void GameManager::update(float dt)
 {
     _powerupInEffect = _powerupManager->getPowerupInEffect();
     _ui->updatePowerupText(_powerupInEffect);
+	_ui->updateScoreText(_ball->getPaddle1Score(), _ball->getPaddle2Score());
     _powerupInEffect.second -= dt;
     
 
@@ -74,7 +75,7 @@ void GameManager::update(float dt)
 
     if (_time > _timeLastPowerupSpawned + POWERUP_FREQUENCY && rand()%700 == 0)      // TODO parameterise
     {
-        _powerupManager->spawnPowerup();
+        //_powerupManager->spawnPowerup();
         _timeLastPowerupSpawned = _time;
     }
 

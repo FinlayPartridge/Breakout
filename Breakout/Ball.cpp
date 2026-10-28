@@ -32,6 +32,16 @@ void Ball::update(float dt)
         }        
     }
 
+	//Change color based on last touched paddle
+    if (_lastTouchedPaddle1)
+    {
+        _sprite.setFillColor(sf::Color::Cyan);
+    }
+    else
+    {
+		_sprite.setFillColor(sf::Color::Red);
+    }
+
     // Fireball effect
     if (_isFireBall)
     {
@@ -66,6 +76,8 @@ void Ball::update(float dt)
         _direction = { 1, 1 };
         _gameManager->loseLife();
     }
+    
+	
 
     // collision with paddle
     if (_sprite.getGlobalBounds().intersects(_gameManager->getPaddle()->getBounds()))
@@ -77,6 +89,8 @@ void Ball::update(float dt)
 
         // Adjust position to avoid getting stuck inside the paddle
         _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle()->getBounds().top - 2 * RADIUS);
+
+		_lastTouchedPaddle1 = true;
     }
 
 
@@ -90,6 +104,8 @@ void Ball::update(float dt)
 
         // Adjust position to avoid getting stuck inside the paddle
         _sprite.setPosition(_sprite.getPosition().x, _gameManager->getPaddle2()->getBounds().top - 2 * RADIUS);
+
+		_lastTouchedPaddle1 = false;
     }
 
     // collision with bricks
@@ -98,10 +114,26 @@ void Ball::update(float dt)
     if (collisionResponse == 1)
     {
         _direction.x *= -1; // Bounce horizontally
+        if (_lastTouchedPaddle1)
+        {
+            _paddle1Score++;
+        }
+        else
+        {
+            _paddle2Score++;
+		}
     }
     else if (collisionResponse == 2)
     {
         _direction.y *= -1; // Bounce vertically
+        if (_lastTouchedPaddle1)
+        {
+            _paddle1Score++;
+        }
+        else
+        {
+            _paddle2Score++;
+        }
     }
 }
 
@@ -127,3 +159,5 @@ void Ball::setFireBall(float duration)
     _isFireBall = false;
     _timeWithPowerupEffect = 0.f;    
 }
+
+
